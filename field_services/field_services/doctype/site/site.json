@@ -17,6 +17,9 @@
   "site_contact_phone",
   "column_break_contact",
   "address",
+  "section_break_location",
+  "address_display",
+  "column_break_location",
   "gps_coordinates",
   "section_break_access",
   "access_instructions",
@@ -94,6 +97,21 @@
    "fieldtype": "Link",
    "label": "Address",
    "options": "Address"
+  },
+  {
+   "fieldname": "section_break_location",
+   "fieldtype": "Section Break",
+   "label": "Location"
+  },
+  {
+   "fieldname": "address_display",
+   "fieldtype": "Small Text",
+   "label": "Address Details",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_location",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "gps_coordinates",

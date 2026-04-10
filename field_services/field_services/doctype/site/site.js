@@ -4,20 +4,21 @@
 frappe.ui.form.on("Site", {
 	address: function (frm) {
 		if (!frm.doc.address) {
+			frm.set_value("address_display", "");
 			return;
 		}
 
 		frappe.db.get_doc("Address", frm.doc.address).then((addr) => {
-			const parts = [
+			const lines = [
 				addr.address_line1,
 				addr.address_line2,
-				addr.city,
-				addr.state,
-				addr.pincode,
+				[addr.city, addr.state, addr.pincode].filter(Boolean).join(", "),
 				addr.country,
 			].filter(Boolean);
 
-			const address_str = parts.join(", ");
+			frm.set_value("address_display", lines.join("\n"));
+
+			const address_str = lines.join(", ");
 			if (!address_str) {
 				return;
 			}
