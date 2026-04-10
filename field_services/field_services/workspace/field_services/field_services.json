@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"heading_setup\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Setup</b></span>\",\"col\":12}},{\"id\":\"card_regions\",\"type\":\"card\",\"data\":{\"card_name\":\"Regions\",\"col\":4}}]",
+ "content": "[{\"id\":\"heading_setup\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Setup</b></span>\",\"col\":12}},{\"id\":\"card_regions\",\"type\":\"card\",\"data\":{\"card_name\":\"Regions\",\"col\":4}},{\"id\":\"card_sites\",\"type\":\"card\",\"data\":{\"card_name\":\"Sites\",\"col\":4}}]",
  "creation": "2026-04-10 16:00:00.000000",
  "docstatus": 0,
  "doctype": "Workspace",
@@ -29,6 +29,25 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sites",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Site",
+   "link_count": 0,
+   "link_to": "Site",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
  "modified": "2026-04-10 16:00:00.000000",
@@ -48,6 +67,13 @@
    "doc_view": "List",
    "label": "Service Region",
    "link_to": "Service Region",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Site",
+   "link_to": "Site",
    "type": "DocType"
   }
  ],

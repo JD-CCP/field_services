@@ -1,0 +1,187 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:SITE-{site_code}",
+ "creation": "2026-04-10 16:30:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "site_name",
+  "customer",
+  "site_code",
+  "column_break_main",
+  "site_type",
+  "status",
+  "section_break_contact",
+  "site_contact_name",
+  "site_contact_phone",
+  "column_break_contact",
+  "address",
+  "gps_coordinates",
+  "section_break_access",
+  "access_instructions",
+  "description",
+  "section_break_documents",
+  "documents"
+ ],
+ "fields": [
+  {
+   "fieldname": "site_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Site Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "description": "Internal reference code",
+   "fieldname": "site_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Site Code"
+  },
+  {
+   "fieldname": "column_break_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "site_type",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Site Type",
+   "options": "\nOffice\nIndustrial\nRetail\nWarehouse\nResidential\nData Centre\nOther"
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Active\nInactive\nDecommissioned"
+  },
+  {
+   "fieldname": "section_break_contact",
+   "fieldtype": "Section Break",
+   "label": "Contact & Location"
+  },
+  {
+   "fieldname": "site_contact_name",
+   "fieldtype": "Data",
+   "label": "Site Contact Name"
+  },
+  {
+   "fieldname": "site_contact_phone",
+   "fieldtype": "Data",
+   "label": "Site Contact Phone",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "column_break_contact",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Link",
+   "label": "Address",
+   "options": "Address"
+  },
+  {
+   "fieldname": "gps_coordinates",
+   "fieldtype": "Geolocation",
+   "label": "GPS Coordinates"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_access",
+   "fieldtype": "Section Break",
+   "label": "Access & Description"
+  },
+  {
+   "description": "Gate codes, parking details, site access notes, etc.",
+   "fieldname": "access_instructions",
+   "fieldtype": "Text Editor",
+   "label": "Access Instructions"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "section_break_documents",
+   "fieldtype": "Section Break",
+   "label": "Documents"
+  },
+  {
+   "fieldname": "documents",
+   "fieldtype": "Table",
+   "label": "Documents",
+   "options": "Site Document"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-04-10 16:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Field Services",
+ "name": "Site",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Services Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Services Dispatcher",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Services Viewer",
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
