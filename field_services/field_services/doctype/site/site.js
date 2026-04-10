@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Site", {
-	refresh: function (frm) {
+	setup: function (frm) {
 		frm.set_query("address", function () {
 			return {
 				query: "frappe.contacts.doctype.address.address.address_query",
@@ -12,6 +12,14 @@ frappe.ui.form.on("Site", {
 				},
 			};
 		});
+	},
+
+	refresh: function (frm) {
+		frappe.dynamic_link = {
+			doc: frm.doc,
+			fieldname: "customer",
+			doctype: "Customer",
+		};
 	},
 
 	customer: function (frm) {
