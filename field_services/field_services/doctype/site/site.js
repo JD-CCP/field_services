@@ -23,7 +23,7 @@ frappe.ui.form.on("Site", {
 			}
 
 			frappe.call({
-				method: "field_services.field_services.api.geocode_address",
+				method: "field_services.api.geocode_address",
 				args: { address: address_str },
 				freeze: true,
 				freeze_message: __("Locating address on map..."),
