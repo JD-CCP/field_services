@@ -2,6 +2,26 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Site", {
+	refresh: function (frm) {
+		frm.set_query("address", function () {
+			return {
+				query: "frappe.contacts.doctype.address.address.address_query",
+				filters: {
+					link_doctype: "Customer",
+					link_name: frm.doc.customer || "",
+				},
+			};
+		});
+	},
+
+	customer: function (frm) {
+		if (frm.doc.address) {
+			frm.set_value("address", null);
+			frm.set_value("address_display", "");
+			frm.set_value("gps_coordinates", "");
+		}
+	},
+
 	address: function (frm) {
 		if (!frm.doc.address) {
 			frm.set_value("address_display", "");
