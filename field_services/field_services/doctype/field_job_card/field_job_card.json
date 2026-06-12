@@ -8,6 +8,7 @@
   "project",
   "site",
   "employee",
+  "service_team",
   "column_break_main",
   "operation",
   "status",
@@ -66,6 +67,14 @@
    "label": "Employee",
    "options": "Employee",
    "reqd": 1
+  },
+  {
+   "description": "If set, clock out logs time for every active team member",
+   "fieldname": "service_team",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Service Team",
+   "options": "Service Team"
   },
   {
    "fieldname": "column_break_main",

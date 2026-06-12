@@ -153,8 +153,20 @@ def close_active_time_log(doc):
 			break
 
 
+def get_job_card_employees(job_card_doc):
+	"""The job card employee plus every active member of its service team."""
+	employees = [job_card_doc.employee]
+	if job_card_doc.service_team:
+		team = frappe.get_doc("Service Team", job_card_doc.service_team)
+		for member in team.members:
+			if member.is_active and member.employee not in employees:
+				employees.append(member.employee)
+	return employees
+
+
 def create_timesheet_entry(job_card_doc):
-	"""Create or append to a Timesheet for this employee."""
+	"""Create or append to a draft Timesheet for the job card employee
+	and every active member of the linked service team."""
 	first_log = job_card_doc.time_logs[0] if job_card_doc.time_logs else None
 	last_log = job_card_doc.time_logs[-1] if job_card_doc.time_logs else None
 	if not first_log:
@@ -173,25 +185,27 @@ def create_timesheet_entry(job_card_doc):
 		"field_job_card": job_card_doc.name,
 	}
 
-	# Find existing Draft timesheet for this employee
-	existing = frappe.db.get_value(
-		"Timesheet",
-		{"employee": job_card_doc.employee, "docstatus": 0},
-		"name",
-	)
+	for employee in get_job_card_employees(job_card_doc):
+		existing = frappe.db.get_value(
+			"Timesheet",
+			{"employee": employee, "docstatus": 0},
+			"name",
+		)
 
-	if existing:
-		ts = frappe.get_doc("Timesheet", existing)
-		row = ts.append("time_logs", ts_data)
-		ts.save(ignore_permissions=True)
-	else:
-		ts = frappe.get_doc({
-			"doctype": "Timesheet",
-			"employee": job_card_doc.employee,
-			"time_logs": [ts_data],
-		})
-		ts.insert(ignore_permissions=True)
-		row = ts.time_logs[0]
+		if existing:
+			ts = frappe.get_doc("Timesheet", existing)
+			row = ts.append("time_logs", ts_data)
+			ts.save(ignore_permissions=True)
+		else:
+			ts = frappe.get_doc({
+				"doctype": "Timesheet",
+				"employee": employee,
+				"time_logs": [ts_data],
+			})
+			ts.insert(ignore_permissions=True)
+			row = ts.time_logs[0]
 
-	job_card_doc.timesheet = ts.name
-	job_card_doc.timesheet_detail = row.name
+		# The job card keeps a direct reference to its own employee's entry
+		if employee == job_card_doc.employee:
+			job_card_doc.timesheet = ts.name
+			job_card_doc.timesheet_detail = row.name
