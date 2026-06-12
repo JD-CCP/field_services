@@ -29,6 +29,27 @@ frappe.ui.form.on("Field Job Card", {
 			});
 		});
 	},
+
+	service_team: function (frm) {
+		frm.clear_table("team_members");
+
+		if (!frm.doc.service_team) {
+			frm.refresh_field("team_members");
+			return;
+		}
+
+		frappe.db.get_doc("Service Team", frm.doc.service_team).then((team) => {
+			(team.members || []).forEach((member) => {
+				if (member.is_active) {
+					frm.add_child("team_members", {
+						employee: member.employee,
+						role: member.role,
+					});
+				}
+			});
+			frm.refresh_field("team_members");
+		});
+	},
 });
 
 function setup_clock_buttons(frm) {

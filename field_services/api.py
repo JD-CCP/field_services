@@ -154,13 +154,15 @@ def close_active_time_log(doc):
 
 
 def get_job_card_employees(job_card_doc):
-	"""The job card employee plus every active member of its service team."""
-	employees = [job_card_doc.employee]
-	if job_card_doc.service_team:
-		team = frappe.get_doc("Service Team", job_card_doc.service_team)
-		for member in team.members:
-			if member.is_active and member.employee not in employees:
-				employees.append(member.employee)
+	"""Employees who get timesheet entries: the members listed on the job
+	card's own team table (anyone removed there is skipped), falling back
+	to the job card employee if the table is empty."""
+	employees = []
+	for member in job_card_doc.team_members or []:
+		if member.employee not in employees:
+			employees.append(member.employee)
+	if not employees:
+		employees.append(job_card_doc.employee)
 	return employees
 
 

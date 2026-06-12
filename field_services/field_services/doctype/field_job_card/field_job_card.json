@@ -12,6 +12,8 @@
   "column_break_main",
   "operation",
   "status",
+  "section_break_team",
+  "team_members",
   "section_break_hours",
   "planned_hours",
   "actual_hours",
@@ -69,12 +71,13 @@
    "reqd": 1
   },
   {
-   "description": "If set, clock out logs time for every active team member",
+   "description": "Clock out logs time for every team member listed below",
    "fieldname": "service_team",
    "fieldtype": "Link",
    "in_standard_filter": 1,
    "label": "Service Team",
-   "options": "Service Team"
+   "options": "Service Team",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_main",
@@ -94,6 +97,18 @@
    "in_standard_filter": 1,
    "label": "Status",
    "options": "Open\nWork In Progress\nPaused\nCompleted\nCancelled"
+  },
+  {
+   "fieldname": "section_break_team",
+   "fieldtype": "Section Break",
+   "label": "Team Members"
+  },
+  {
+   "description": "Remove anyone who was not on site - only listed members get timesheet entries",
+   "fieldname": "team_members",
+   "fieldtype": "Table",
+   "label": "Team Members On Site",
+   "options": "Job Card Team Member"
   },
   {
    "fieldname": "section_break_hours",

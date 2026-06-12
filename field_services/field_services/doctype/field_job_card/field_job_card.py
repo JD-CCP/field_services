@@ -14,7 +14,21 @@ class FieldJobCard(Document):
 		self.name = f"{self.project}-{date_part}-{counter}"
 
 	def validate(self):
+		self.populate_team_members()
 		self.set_sign_off_date()
+
+	def populate_team_members(self):
+		"""Fill the team table from the service team if it's empty, so
+		job cards created via the API also get the member list."""
+		if self.team_members or not self.service_team:
+			return
+		team = frappe.get_doc("Service Team", self.service_team)
+		for member in team.members:
+			if member.is_active:
+				self.append("team_members", {
+					"employee": member.employee,
+					"role": member.role,
+				})
 
 	def set_sign_off_date(self):
 		if (self.sign_off_name or self.client_signature) and not self.sign_off_date:
