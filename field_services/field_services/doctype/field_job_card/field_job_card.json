@@ -1,7 +1,6 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "FJC-.YYYY.-.#####",
  "creation": "2026-05-16 00:00:00.000000",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -247,7 +246,6 @@
  "modified_by": "Administrator",
  "module": "Field Services",
  "name": "Field Job Card",
- "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {

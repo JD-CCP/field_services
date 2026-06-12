@@ -3,7 +3,7 @@
 
 frappe.ui.form.on("Field Job Card", {
 	refresh: function (frm) {
-		frm.add_custom_button(__("Upload Photos"), function () {
+		frm.fields_dict.photos.grid.add_custom_button(__("Upload Photos"), function () {
 			if (frm.is_new()) {
 				frappe.msgprint(__("Please save the Job Card before uploading photos."));
 				return;
