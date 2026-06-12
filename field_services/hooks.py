@@ -83,7 +83,8 @@ doctype_js = {"Address": "public/js/address.js"}
 # ------------
 
 # before_install = "field_services.install.before_install"
-# after_install = "field_services.install.after_install"
+after_install = "field_services.install.after_migrate"
+after_migrate = ["field_services.install.after_migrate"]
 
 # Uninstallation
 # ------------

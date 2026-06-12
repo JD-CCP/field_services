@@ -1,0 +1,49 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-05-16 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "photo",
+  "caption",
+  "photo_type",
+  "promote_to_site"
+ ],
+ "fields": [
+  {
+   "fieldname": "photo",
+   "fieldtype": "Attach Image",
+   "in_list_view": 1,
+   "label": "Photo",
+   "reqd": 1
+  },
+  {
+   "fieldname": "caption",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Caption"
+  },
+  {
+   "fieldname": "photo_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Photo Type",
+   "options": "Before\nDuring\nAfter\nTest Result\nIssue"
+  },
+  {
+   "default": "0",
+   "fieldname": "promote_to_site",
+   "fieldtype": "Check",
+   "label": "Promote To Site"
+  }
+ ],
+ "istable": 1,
+ "modified": "2026-05-16 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Field Services",
+ "name": "Job Card Photo",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
