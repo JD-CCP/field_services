@@ -5,6 +5,31 @@ frappe.ui.form.on("Field Job Card", {
 	refresh: function (frm) {
 		setup_clock_buttons(frm);
 
+		frm.fields_dict.materials_used.grid.add_custom_button(
+			__("Load Project Materials"),
+			function () {
+				if (frm.is_new()) {
+					frappe.msgprint(__("Please save the Job Card first."));
+					return;
+				}
+				frappe.call({
+					method: "field_services.api.load_project_materials",
+					args: { job_card: frm.docname },
+					freeze: true,
+					freeze_message: __("Loading materials from team store..."),
+					callback: function (r) {
+						frm.reload_doc();
+						if (r.message) {
+							frappe.show_alert({
+								message: __("{0} item(s) loaded", [r.message.items_loaded]),
+								indicator: "green",
+							});
+						}
+					},
+				});
+			}
+		);
+
 		frm.fields_dict.photos.grid.add_custom_button(__("Upload Photos"), function () {
 			if (frm.is_new()) {
 				frappe.msgprint(__("Please save the Job Card before uploading photos."));

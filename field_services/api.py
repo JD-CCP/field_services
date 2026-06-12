@@ -153,6 +153,49 @@ def close_active_time_log(doc):
 			break
 
 
+@frappe.whitelist()
+def load_project_materials(job_card):
+	"""Populate Job Card Material Used from team store stock for this project."""
+	doc = frappe.get_doc("Field Job Card", job_card)
+
+	team_name = doc.service_team
+	if not team_name:
+		frappe.throw("No Service Team assigned to this Job Card")
+	team_warehouse = frappe.db.get_value("Service Team", team_name, "team_warehouse")
+	if not team_warehouse:
+		frappe.throw("Service Team has no warehouse")
+
+	# All items transferred into the team store for this project
+	items = frappe.db.sql(
+		"""
+		SELECT sed.item_code, sed.item_name, SUM(sed.qty) AS total_qty,
+		       sed.uom
+		FROM `tabStock Entry Detail` sed
+		JOIN `tabStock Entry` se ON se.name = sed.parent
+		WHERE se.docstatus = 1
+		  AND se.stock_entry_type = 'Material Transfer'
+		  AND sed.t_warehouse = %s
+		  AND se.project = %s
+		GROUP BY sed.item_code, sed.item_name, sed.uom
+		""",
+		(team_warehouse, doc.project),
+		as_dict=True,
+	)
+
+	# Clear existing material rows and repopulate
+	doc.set("materials_used", [])
+	for item in items:
+		doc.append("materials_used", {
+			"item_code": item.item_code,
+			"item_name": item.item_name,
+			"issued_qty": item.total_qty,
+			"qty_used": 0,
+			"uom": item.uom,
+		})
+	doc.save(ignore_permissions=True)
+	return {"items_loaded": len(items)}
+
+
 def get_job_card_employees(job_card_doc):
 	"""Employees who get timesheet entries: the members listed on the job
 	card's own team table (anyone removed there is skipped)."""
