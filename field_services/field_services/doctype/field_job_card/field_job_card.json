@@ -7,7 +7,6 @@
  "field_order": [
   "project",
   "site",
-  "employee",
   "service_team",
   "column_break_main",
   "operation",
@@ -62,18 +61,10 @@
    "options": "Site"
   },
   {
-   "fieldname": "employee",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Employee",
-   "options": "Employee",
-   "reqd": 1
-  },
-  {
    "description": "Clock out logs time for every team member listed below",
    "fieldname": "service_team",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Service Team",
    "options": "Service Team",

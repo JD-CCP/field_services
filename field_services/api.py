@@ -155,14 +155,13 @@ def close_active_time_log(doc):
 
 def get_job_card_employees(job_card_doc):
 	"""Employees who get timesheet entries: the members listed on the job
-	card's own team table (anyone removed there is skipped), falling back
-	to the job card employee if the table is empty."""
+	card's own team table (anyone removed there is skipped)."""
 	employees = []
 	for member in job_card_doc.team_members or []:
 		if member.employee not in employees:
 			employees.append(member.employee)
 	if not employees:
-		employees.append(job_card_doc.employee)
+		frappe.throw("No team members listed on this Job Card - add at least one before clocking out")
 	return employees
 
 
@@ -187,7 +186,8 @@ def create_timesheet_entry(job_card_doc):
 		"field_job_card": job_card_doc.name,
 	}
 
-	for employee in get_job_card_employees(job_card_doc):
+	employees = get_job_card_employees(job_card_doc)
+	for employee in employees:
 		existing = frappe.db.get_value(
 			"Timesheet",
 			{"employee": employee, "docstatus": 0},
@@ -207,7 +207,8 @@ def create_timesheet_entry(job_card_doc):
 			ts.insert(ignore_permissions=True)
 			row = ts.time_logs[0]
 
-		# The job card keeps a direct reference to its own employee's entry
-		if employee == job_card_doc.employee:
+		# The job card keeps a direct reference to the first listed
+		# member's entry (normally the team lead)
+		if employee == employees[0]:
 			job_card_doc.timesheet = ts.name
 			job_card_doc.timesheet_detail = row.name
