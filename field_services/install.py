@@ -4,6 +4,7 @@ import frappe
 def after_migrate():
 	ensure_project_site_field()
 	ensure_project_field_job_card_link()
+	ensure_timesheet_detail_job_card_field()
 
 
 def ensure_project_site_field():
@@ -41,3 +42,23 @@ def ensure_project_field_job_card_link():
 	})
 	project.flags.ignore_permissions = True
 	project.save()
+
+
+def ensure_timesheet_detail_job_card_field():
+	"""Add a 'field_job_card' Link field to Timesheet Detail so time logs
+	created by clock_out can reference their originating Field Job Card."""
+	if not frappe.db.exists("DocType", "Timesheet Detail"):
+		return
+	if frappe.db.exists("Custom Field", {"dt": "Timesheet Detail", "fieldname": "field_job_card"}):
+		return
+
+	frappe.get_doc({
+		"doctype": "Custom Field",
+		"dt": "Timesheet Detail",
+		"fieldname": "field_job_card",
+		"label": "Field Job Card",
+		"fieldtype": "Link",
+		"options": "Field Job Card",
+		"read_only": 1,
+		"insert_after": "project",
+	}).insert(ignore_permissions=True)

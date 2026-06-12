@@ -1,5 +1,6 @@
 import frappe
 import requests
+from frappe.utils import now_datetime, time_diff_in_hours
 
 # Whitelisted methods for Field Services portals
 
@@ -93,3 +94,104 @@ def geocode_address(address):
 		frappe.log_error(f"Geocoding failed: {e}", "Nominatim Geocode")
 
 	return None
+
+
+@frappe.whitelist()
+def clock_in(job_card):
+	"""Start or resume timing on a job card."""
+	doc = frappe.get_doc("Field Job Card", job_card)
+	if doc.status == "Completed":
+		frappe.throw("Cannot clock in on a completed Job Card")
+
+	row = doc.append("time_logs", {
+		"from_time": now_datetime(),
+		"activity_type": "",  # can be set later
+	})
+	doc.status = "Work In Progress"
+	if not doc.started_at:
+		doc.started_at = now_datetime()
+	doc.save(ignore_permissions=True)
+	return {"time_log": row.name, "from_time": str(row.from_time)}
+
+
+@frappe.whitelist()
+def pause_job(job_card):
+	"""Pause the current time log."""
+	doc = frappe.get_doc("Field Job Card", job_card)
+	close_active_time_log(doc)
+	doc.status = "Paused"
+	doc.save(ignore_permissions=True)
+	return {"status": "Paused"}
+
+
+@frappe.whitelist()
+def resume_job(job_card):
+	"""Resume after pause - same as clock_in."""
+	return clock_in(job_card)
+
+
+@frappe.whitelist()
+def clock_out(job_card):
+	"""Stop timing, calculate totals, create Timesheet entry."""
+	doc = frappe.get_doc("Field Job Card", job_card)
+	close_active_time_log(doc)
+
+	doc.actual_hours = sum(r.hours or 0 for r in doc.time_logs)
+	doc.completed_at = now_datetime()
+	doc.status = "Completed"
+	create_timesheet_entry(doc)
+	doc.save(ignore_permissions=True)
+	return {"status": "Completed", "actual_hours": doc.actual_hours}
+
+
+def close_active_time_log(doc):
+	"""Set to_time/hours on the latest open time log row, if any."""
+	for row in reversed(doc.time_logs):
+		if row.from_time and not row.to_time:
+			row.to_time = now_datetime()
+			row.hours = time_diff_in_hours(row.to_time, row.from_time)
+			break
+
+
+def create_timesheet_entry(job_card_doc):
+	"""Create or append to a Timesheet for this employee."""
+	first_log = job_card_doc.time_logs[0] if job_card_doc.time_logs else None
+	last_log = job_card_doc.time_logs[-1] if job_card_doc.time_logs else None
+	if not first_log:
+		return
+
+	default_activity = None
+	if frappe.get_meta("Projects Settings").has_field("default_activity_type"):
+		default_activity = frappe.db.get_single_value("Projects Settings", "default_activity_type")
+
+	ts_data = {
+		"activity_type": first_log.activity_type or default_activity or "Execution",
+		"from_time": first_log.from_time,
+		"to_time": last_log.to_time or now_datetime(),
+		"hours": job_card_doc.actual_hours,
+		"project": job_card_doc.project,
+		"field_job_card": job_card_doc.name,
+	}
+
+	# Find existing Draft timesheet for this employee
+	existing = frappe.db.get_value(
+		"Timesheet",
+		{"employee": job_card_doc.employee, "docstatus": 0},
+		"name",
+	)
+
+	if existing:
+		ts = frappe.get_doc("Timesheet", existing)
+		row = ts.append("time_logs", ts_data)
+		ts.save(ignore_permissions=True)
+	else:
+		ts = frappe.get_doc({
+			"doctype": "Timesheet",
+			"employee": job_card_doc.employee,
+			"time_logs": [ts_data],
+		})
+		ts.insert(ignore_permissions=True)
+		row = ts.time_logs[0]
+
+	job_card_doc.timesheet = ts.name
+	job_card_doc.timesheet_detail = row.name
