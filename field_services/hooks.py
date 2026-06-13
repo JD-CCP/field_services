@@ -86,6 +86,12 @@ doctype_js = {"Address": "public/js/address.js"}
 after_install = "field_services.install.after_migrate"
 after_migrate = ["field_services.install.after_migrate"]
 
+# Fixtures
+# ------------
+fixtures = [
+	{"dt": "Custom Field", "filters": [["module", "=", "Field Services"]]},
+]
+
 # Uninstallation
 # ------------
 
