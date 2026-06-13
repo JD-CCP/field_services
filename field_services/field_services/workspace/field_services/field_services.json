@@ -1,0 +1,160 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"heading_operations\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Operations</b></span>\",\"col\":12}},{\"id\":\"card_job_cards\",\"type\":\"card\",\"data\":{\"card_name\":\"Job Cards\",\"col\":4}},{\"id\":\"heading_setup\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Setup</b></span>\",\"col\":12}},{\"id\":\"card_regions\",\"type\":\"card\",\"data\":{\"card_name\":\"Regions\",\"col\":4}},{\"id\":\"card_sites\",\"type\":\"card\",\"data\":{\"card_name\":\"Sites\",\"col\":4}},{\"id\":\"card_teams\",\"type\":\"card\",\"data\":{\"card_name\":\"Teams\",\"col\":4}},{\"id\":\"card_boms\",\"type\":\"card\",\"data\":{\"card_name\":\"Service BOMs\",\"col\":4}}]",
+ "creation": "2026-06-13 15:42:22.398128",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "service",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Field Services",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Job Cards",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Field Job Card",
+   "link_count": 0,
+   "link_to": "Field Job Card",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Regions",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Service Region",
+   "link_count": 0,
+   "link_to": "Service Region",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sites",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Site",
+   "link_count": 0,
+   "link_to": "Site",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Teams",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Service Team",
+   "link_count": 0,
+   "link_to": "Service Team",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Service BOMs",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "dependencies": "",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Service BOM",
+   "link_count": 0,
+   "link_to": "Service BOM",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-05-08 16:00:00",
+ "modified_by": "Administrator",
+ "module": "Field Services",
+ "name": "Field Services",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 100.0,
+ "shortcuts": [
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Field Job Card",
+   "link_to": "Field Job Card",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Service Region",
+   "link_to": "Service Region",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "label": "Site",
+   "link_to": "Site",
+   "type": "DocType"
+  },
+  {
+   "color": "Purple",
+   "doc_view": "List",
+   "label": "Service BOM",
+   "link_to": "Service BOM",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "Service Team",
+   "link_to": "Service Team",
+   "type": "DocType"
+  }
+ ],
+ "title": "Field Services"
+}
