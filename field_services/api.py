@@ -1,8 +1,26 @@
 import frappe
 import requests
-from frappe.utils import now_datetime, time_diff_in_hours
+from frappe.utils import flt, now_datetime, time_diff_in_hours
 
 # Whitelisted methods for Field Services portals
+
+
+@frappe.whitelist()
+def explode_service_bom(service_bom, qty):
+	"""Returns exploded item list for a Service BOM x quantity."""
+	qty = flt(qty)
+	bom = frappe.get_doc("Service BOM", service_bom)
+	items = []
+	for item in bom.items:
+		if not item.is_optional:
+			items.append({
+				"item_code": item.item_code,
+				"item_name": item.item_name,
+				"qty": item.effective_qty * qty,
+				"uom": item.uom,
+				"rate": item.rate,
+			})
+	return items
 
 
 NOMINATIM_HEADERS = {
