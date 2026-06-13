@@ -158,9 +158,11 @@ def load_project_materials(job_card):
 	"""Populate Job Card Material Used from team store stock for this project."""
 	doc = frappe.get_doc("Field Job Card", job_card)
 
-	team_name = doc.service_team
+	# The team is assigned at project level; fall back to the job card's
+	# own team if the project does not have one set.
+	team_name = frappe.db.get_value("Project", doc.project, "service_team") or doc.service_team
 	if not team_name:
-		frappe.throw("No Service Team assigned to this Job Card")
+		frappe.throw("No Service Team assigned to this Project")
 	team_warehouse = frappe.db.get_value("Service Team", team_name, "team_warehouse")
 	if not team_warehouse:
 		frappe.throw("Service Team has no warehouse")

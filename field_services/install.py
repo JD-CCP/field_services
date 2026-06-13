@@ -3,8 +3,28 @@ import frappe
 
 def after_migrate():
 	ensure_project_site_field()
+	ensure_project_service_team_field()
 	ensure_project_field_job_card_link()
 	ensure_timesheet_detail_job_card_field()
+
+
+def ensure_project_service_team_field():
+	"""Add a 'service_team' Link field to Project so the assigned field
+	team is captured at project level and flows down to Field Job Cards."""
+	if not frappe.db.exists("DocType", "Service Team"):
+		return
+	if frappe.db.exists("Custom Field", {"dt": "Project", "fieldname": "service_team"}):
+		return
+
+	frappe.get_doc({
+		"doctype": "Custom Field",
+		"dt": "Project",
+		"fieldname": "service_team",
+		"label": "Service Team",
+		"fieldtype": "Link",
+		"options": "Service Team",
+		"insert_after": "site",
+	}).insert(ignore_permissions=True)
 
 
 def ensure_project_site_field():

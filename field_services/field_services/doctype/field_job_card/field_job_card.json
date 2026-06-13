@@ -61,7 +61,8 @@
    "options": "Site"
   },
   {
-   "description": "Clock out logs time for every team member listed below",
+   "description": "Defaults from the Project; clock out logs time for every team member listed below",
+   "fetch_from": "project.service_team",
    "fieldname": "service_team",
    "fieldtype": "Link",
    "in_list_view": 1,
