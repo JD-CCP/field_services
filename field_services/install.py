@@ -4,7 +4,6 @@ from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 
 def after_migrate():
 	ensure_custom_fields()
-	ensure_project_field_job_card_link()
 
 
 CUSTOM_FIELDS = {
@@ -141,22 +140,3 @@ def ensure_custom_fields():
 			df.setdefault("module", "Field Services")
 
 	create_custom_fields(CUSTOM_FIELDS, ignore_validate=True)
-
-
-def ensure_project_field_job_card_link():
-	"""Add Field Job Card to Project's Connections section (idempotent)."""
-	if not frappe.db.exists("DocType", "Field Job Card"):
-		return
-
-	project = frappe.get_doc("DocType", "Project")
-	if any(l.link_doctype == "Field Job Card" for l in project.links or []):
-		return
-
-	project.append("links", {
-		"link_doctype": "Field Job Card",
-		"link_fieldname": "project",
-		"group": "Project",
-		"custom": 1,
-	})
-	project.flags.ignore_permissions = True
-	project.save()
