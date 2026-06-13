@@ -1,0 +1,80 @@
+[
+ {
+  "desk_access": 1,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 0,
+  "modified": "2026-06-13 15:18:19.399301",
+  "name": "Field Services Manager",
+  "restrict_to_domain": null,
+  "role_name": "Field Services Manager",
+  "two_factor_auth": 0
+ },
+ {
+  "desk_access": 1,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 0,
+  "modified": "2026-06-13 15:18:19.594156",
+  "name": "Field Services Dispatcher",
+  "restrict_to_domain": null,
+  "role_name": "Field Services Dispatcher",
+  "two_factor_auth": 0
+ },
+ {
+  "desk_access": 1,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 0,
+  "modified": "2026-06-13 15:18:19.596384",
+  "name": "Field Services Viewer",
+  "restrict_to_domain": null,
+  "role_name": "Field Services Viewer",
+  "two_factor_auth": 0
+ },
+ {
+  "desk_access": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 0,
+  "modified": "2026-06-13 15:18:19.598826",
+  "name": "Field Services Lead",
+  "restrict_to_domain": null,
+  "role_name": "Field Services Lead",
+  "two_factor_auth": 0
+ },
+ {
+  "desk_access": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 0,
+  "modified": "2026-06-13 15:18:20.046424",
+  "name": "Field Services Technician",
+  "restrict_to_domain": null,
+  "role_name": "Field Services Technician",
+  "two_factor_auth": 0
+ },
+ {
+  "desk_access": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 0,
+  "modified": "2026-06-13 15:18:20.049774",
+  "name": "Field Services Warehouse",
+  "restrict_to_domain": null,
+  "role_name": "Field Services Warehouse",
+  "two_factor_auth": 0
+ }
+]

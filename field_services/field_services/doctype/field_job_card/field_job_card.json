@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2026-05-16 00:00:00.000000",
+ "creation": "2026-05-16 00:00:00",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -258,7 +258,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-06-12 16:00:00.000000",
+ "modified": "2026-06-13 15:28:16.073607",
  "modified_by": "Administrator",
  "module": "Field Services",
  "name": "Field Job Card",
@@ -289,23 +289,24 @@
    "write": 1
   },
   {
-   "email": 1,
-   "print": 1,
+   "create": 1,
    "read": 1,
-   "report": 1,
-   "role": "Field Services Dispatcher",
-   "share": 1,
+   "role": "Field Services Lead",
    "write": 1
   },
   {
-   "email": 1,
-   "print": 1,
+   "create": 1,
+   "if_owner": 1,
    "read": 1,
-   "report": 1,
-   "role": "Field Services Viewer",
-   "share": 1
+   "role": "Field Services Technician",
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Field Services Viewer"
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": [],
