@@ -69,20 +69,11 @@ function apply_team_lead_to_members(frm) {
 }
 
 frappe.ui.form.on('Service Team', {
-	refresh(frm) {
-		if (!frm.is_new() && !frm.doc.team_warehouse) {
-			frm.add_custom_button(__('Create Team Warehouse'), function () {
-				frm.call('create_team_warehouse').then(function (r) {
-					frm.reload_doc();
-					if (r.message) {
-						frappe.show_alert({
-							message: __('Team warehouse set: {0}', [r.message.team_warehouse]),
-							indicator: 'green',
-						});
-					}
-				});
-			});
-		}
+	setup(frm) {
+		// Only warehouses flagged as Field Service Stores can be a team store
+		frm.set_query('team_warehouse', function () {
+			return { filters: { is_field_service_store: 1 } };
+		});
 	},
 
 	team_lead(frm) {

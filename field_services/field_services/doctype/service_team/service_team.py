@@ -7,55 +7,6 @@ class ServiceTeam(Document):
 		self._sync_team_lead_member()
 		self._check_member_conflicts()
 
-	def before_save(self):
-		if not self.team_warehouse:
-			self.team_warehouse = self._get_or_create_team_warehouse()
-
-	def _warehouse_company(self):
-		return frappe.defaults.get_defaults().get("company")
-
-	def _parent_warehouse(self, company):
-		if self.service_region:
-			region_wh = frappe.db.get_value("Service Region", self.service_region, "default_warehouse")
-			if region_wh:
-				return region_wh
-		return frappe.db.get_single_value("Stock Settings", "default_warehouse") or ""
-
-	def _get_or_create_team_warehouse(self):
-		"""Reuse an existing FS team store for this team/company if present,
-		otherwise create one. Reuse avoids the duplicate-name crash that
-		happened when the existence check ignored the company abbr suffix."""
-		company = self._warehouse_company()
-		base_name = f"FS-{self.team_name} - Store"
-
-		# already exists for this company (by base name or abbr-suffixed name)?
-		existing = frappe.db.get_value(
-			"Warehouse", {"warehouse_name": base_name, "company": company}, "name"
-		)
-		if existing:
-			return existing
-		abbr = frappe.get_cached_value("Company", company, "abbr") if company else None
-		if abbr and frappe.db.exists("Warehouse", f"{base_name} - {abbr}"):
-			return f"{base_name} - {abbr}"
-
-		wh = frappe.get_doc({
-			"doctype": "Warehouse",
-			"warehouse_name": base_name,
-			"parent_warehouse": self._parent_warehouse(company),
-			"company": company,
-		})
-		wh.insert(ignore_permissions=True)
-		return wh.name
-
-	@frappe.whitelist()
-	def create_team_warehouse(self):
-		"""Assign (or create) this team's store on demand from the form."""
-		if self.team_warehouse:
-			return {"team_warehouse": self.team_warehouse, "created": False}
-		self.team_warehouse = self._get_or_create_team_warehouse()
-		self.save()
-		return {"team_warehouse": self.team_warehouse, "created": True}
-
 	def _sync_team_lead_member(self):
 		if not self.team_lead:
 			return

@@ -78,7 +78,7 @@
    "options": "Vehicle"
   },
   {
-   "description": "Leave blank to auto-create one on save, pick an existing warehouse, or create a new one inline.",
+   "description": "Select a warehouse marked as a Field Service Store. Tick 'Field Service Store' on a warehouse to make it selectable here.",
    "fieldname": "team_warehouse",
    "fieldtype": "Link",
    "label": "Team Warehouse",

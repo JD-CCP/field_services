@@ -128,6 +128,15 @@ CUSTOM_FIELDS = {
 			"allow_on_submit": 1,
 		},
 	],
+	"Warehouse": [
+		{
+			"fieldname": "is_field_service_store",
+			"label": "Field Service Store",
+			"fieldtype": "Check",
+			"description": "Mark this warehouse as a Field Services team store so it can be selected as a team's warehouse.",
+			"insert_after": "warehouse_name",
+		},
+	],
 	"Employee": [
 		{
 			"fieldname": "confirmation_pin",
