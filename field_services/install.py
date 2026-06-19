@@ -92,6 +92,8 @@ CUSTOM_FIELDS = {
 			"fieldtype": "Select",
 			"options": "\nPending Confirmation\nConfirmed\nDiscrepancy",
 			"insert_after": "purpose",
+			"allow_on_submit": 1,
+			"read_only": 1,
 		},
 		{
 			"fieldname": "confirmed_by",
@@ -101,6 +103,7 @@ CUSTOM_FIELDS = {
 			"read_only": 1,
 			"depends_on": "confirmation_status",
 			"insert_after": "confirmation_status",
+			"allow_on_submit": 1,
 		},
 		{
 			"fieldname": "confirmed_on",
@@ -108,6 +111,7 @@ CUSTOM_FIELDS = {
 			"fieldtype": "Datetime",
 			"read_only": 1,
 			"insert_after": "confirmed_by",
+			"allow_on_submit": 1,
 		},
 	],
 	"Employee": [

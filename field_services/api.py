@@ -1,8 +1,34 @@
 import frappe
 import requests
 from frappe.utils import flt, now_datetime, time_diff_in_hours
+from frappe.utils.password import get_decrypted_password
 
 # Whitelisted methods for Field Services portals
+
+
+@frappe.whitelist()
+def confirm_stock_receipt(stock_entry, pin):
+	"""Team lead confirms receipt of stock transfer."""
+	se = frappe.get_doc("Stock Entry", stock_entry)
+	if se.confirmation_status != "Pending Confirmation":
+		frappe.throw("This transfer is not pending confirmation")
+
+	# Get the employee for the current user
+	employee = frappe.db.get_value("Employee", {"user_id": frappe.session.user}, "name")
+	if not employee:
+		frappe.throw("No Employee record for current user")
+
+	# Verify PIN (Password field must be decrypted, not read via db.get_value)
+	stored_pin = get_decrypted_password("Employee", employee, "confirmation_pin", raise_exception=False)
+	if not stored_pin or str(pin) != str(stored_pin):
+		frappe.throw("Invalid PIN")
+
+	# Confirm
+	se.db_set("confirmation_status", "Confirmed")
+	se.db_set("confirmed_by", employee)
+	se.db_set("confirmed_on", now_datetime())
+	se.add_comment("Info", f"Receipt confirmed by {employee}")
+	return {"status": "Confirmed"}
 
 
 @frappe.whitelist()
