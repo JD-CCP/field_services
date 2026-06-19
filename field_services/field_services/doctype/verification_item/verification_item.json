@@ -1,0 +1,100 @@
+{
+ "actions": [],
+ "creation": "2026-06-19 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item_code",
+  "item_name",
+  "issued_qty",
+  "declared_used_qty",
+  "returned_qty",
+  "deviation_qty",
+  "deviation_type",
+  "rate",
+  "deviation_cost",
+  "deviation_notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item Code",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "item_code.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "issued_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Issued Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "declared_used_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Declared Used Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "returned_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Returned Qty"
+  },
+  {
+   "fieldname": "deviation_qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Deviation Qty",
+   "read_only": 1
+  },
+  {
+   "default": "N/A",
+   "fieldname": "deviation_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Deviation Type",
+   "options": "N/A\nLost\nDamaged\nAdditionally Used\nOther"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate"
+  },
+  {
+   "fieldname": "deviation_cost",
+   "fieldtype": "Currency",
+   "label": "Deviation Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "deviation_notes",
+   "fieldtype": "Small Text",
+   "label": "Deviation Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-06-19 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Field Services",
+ "name": "Verification Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

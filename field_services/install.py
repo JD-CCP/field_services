@@ -68,6 +68,13 @@ CUSTOM_FIELDS = {
 			"fieldtype": "Text Editor",
 			"insert_after": "hours_verified_on",
 		},
+		{
+			"fieldname": "total_actual_material_cost",
+			"label": "Total Actual Material Cost",
+			"fieldtype": "Currency",
+			"read_only": 1,
+			"insert_after": "verification_notes",
+		},
 	],
 	"Quotation": [
 		{

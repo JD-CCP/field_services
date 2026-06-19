@@ -1,0 +1,224 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-06-19 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "is_submittable": 1,
+ "field_order": [
+  "project",
+  "service_team",
+  "verified_by",
+  "verification_date",
+  "column_break_main",
+  "status",
+  "return_warehouse",
+  "section_break_totals",
+  "total_issued_cost",
+  "total_consumed_cost",
+  "column_break_totals",
+  "total_returned_cost",
+  "total_deviation_cost",
+  "section_break_items",
+  "items",
+  "section_break_notes",
+  "wh_manager_notes",
+  "section_break_pm",
+  "pm_approved_by",
+  "pm_approved_on",
+  "pm_notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Project",
+   "options": "Project",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "project.service_team",
+   "fieldname": "service_team",
+   "fieldtype": "Link",
+   "label": "Service Team",
+   "options": "Service Team"
+  },
+  {
+   "fieldname": "verified_by",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Verified By",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "verification_date",
+   "fieldtype": "Date",
+   "label": "Verification Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Draft\nSubmitted\nPM Approved\nPM Rejected",
+   "allow_on_submit": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "return_warehouse",
+   "fieldtype": "Link",
+   "label": "Return Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "section_break_totals",
+   "fieldtype": "Section Break",
+   "label": "Cost Summary"
+  },
+  {
+   "fieldname": "total_issued_cost",
+   "fieldtype": "Currency",
+   "label": "Total Issued Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_consumed_cost",
+   "fieldtype": "Currency",
+   "label": "Total Consumed Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_totals",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_returned_cost",
+   "fieldtype": "Currency",
+   "label": "Total Returned Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_deviation_cost",
+   "fieldtype": "Currency",
+   "label": "Total Deviation Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_items",
+   "fieldtype": "Section Break",
+   "label": "Items"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Verification Item"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_notes",
+   "fieldtype": "Section Break",
+   "label": "Warehouse Manager Notes"
+  },
+  {
+   "fieldname": "wh_manager_notes",
+   "fieldtype": "Text Editor",
+   "label": "Warehouse Manager Notes"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_pm",
+   "fieldtype": "Section Break",
+   "label": "PM Approval"
+  },
+  {
+   "fieldname": "pm_approved_by",
+   "fieldtype": "Link",
+   "label": "PM Approved By",
+   "options": "Employee",
+   "read_only": 1,
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "pm_approved_on",
+   "fieldtype": "Datetime",
+   "label": "PM Approved On",
+   "read_only": 1,
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "pm_notes",
+   "fieldtype": "Text Editor",
+   "label": "PM Notes",
+   "allow_on_submit": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-06-19 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Field Services",
+ "name": "Material Verification",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Services Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Field Services Warehouse",
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Field Services Viewer"
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
