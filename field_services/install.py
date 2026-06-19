@@ -69,11 +69,18 @@ CUSTOM_FIELDS = {
 			"insert_after": "hours_verified_on",
 		},
 		{
+			"fieldname": "total_planned_material_cost",
+			"label": "Total Planned Material Cost",
+			"fieldtype": "Currency",
+			"read_only": 1,
+			"insert_after": "verification_notes",
+		},
+		{
 			"fieldname": "total_actual_material_cost",
 			"label": "Total Actual Material Cost",
 			"fieldtype": "Currency",
 			"read_only": 1,
-			"insert_after": "verification_notes",
+			"insert_after": "total_planned_material_cost",
 		},
 	],
 	"Quotation": [

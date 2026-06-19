@@ -1,0 +1,25 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "creation": "2026-06-20 00:00:00.000000",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "",
+ "module": "Field Services",
+ "name": "Material Variance by Project",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "SELECT\n  p.name AS \"Project:Link/Project:200\",\n  p.customer AS \"Customer:Link/Customer:200\",\n  p.service_team AS \"Team:Link/Service Team:150\",\n  IFNULL(p.total_planned_material_cost, 0) AS \"Planned Material Cost:Currency:160\",\n  IFNULL(p.total_actual_material_cost, 0) AS \"Actual Material Cost:Currency:160\",\n  (IFNULL(p.total_planned_material_cost, 0) - IFNULL(p.total_actual_material_cost, 0)) AS \"Variance:Currency:150\"\nFROM `tabProject` p\nWHERE p.docstatus < 2\n  AND (%(service_region)s = '' OR p.service_region = %(service_region)s)\n  AND (%(customer)s = '' OR p.customer = %(customer)s)\n  AND (%(from_date)s = '' OR p.expected_start_date >= %(from_date)s)\n  AND (%(to_date)s = '' OR p.expected_start_date <= %(to_date)s)\nORDER BY (IFNULL(p.total_planned_material_cost, 0) - IFNULL(p.total_actual_material_cost, 0)) ASC",
+ "ref_doctype": "Project",
+ "report_name": "Material Variance by Project",
+ "report_type": "Query Report",
+ "roles": [
+  {"role": "System Manager"},
+  {"role": "Field Services Manager"},
+  {"role": "Field Services Viewer"}
+ ]
+}
