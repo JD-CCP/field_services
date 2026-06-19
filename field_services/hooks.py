@@ -95,6 +95,7 @@ fixtures = [
 	{"dt": "Custom Field", "filters": [["module", "=", "Field Services"]]},
 	{"dt": "Role", "filters": [["name", "like", "Field Services%"]]},
 	{"dt": "Workspace", "filters": [["module", "=", "Field Services"]]},
+	{"dt": "FS Shift Type"},
 ]
 
 # Uninstallation

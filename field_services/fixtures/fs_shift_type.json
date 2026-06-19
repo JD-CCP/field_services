@@ -1,0 +1,50 @@
+[
+ {
+  "colour": "#FFC107",
+  "docstatus": 0,
+  "doctype": "FS Shift Type",
+  "end_time": "9:00:00",
+  "hours": 9.0,
+  "is_on_call": 0,
+  "modified": "2026-06-20 01:26:04.678011",
+  "name": "Morning",
+  "shift_name": "Morning",
+  "start_time": "0:00:00"
+ },
+ {
+  "colour": "#2196F3",
+  "docstatus": 0,
+  "doctype": "FS Shift Type",
+  "end_time": "17:00:00",
+  "hours": 9.0,
+  "is_on_call": 0,
+  "modified": "2026-06-20 01:26:04.800877",
+  "name": "Day",
+  "shift_name": "Day",
+  "start_time": "8:00:00"
+ },
+ {
+  "colour": "#3F51B5",
+  "docstatus": 0,
+  "doctype": "FS Shift Type",
+  "end_time": "0:00:00",
+  "hours": 9.0,
+  "is_on_call": 0,
+  "modified": "2026-06-20 01:26:04.802319",
+  "name": "Night",
+  "shift_name": "Night",
+  "start_time": "15:00:00"
+ },
+ {
+  "colour": "#F44336",
+  "docstatus": 0,
+  "doctype": "FS Shift Type",
+  "end_time": "17:00:00",
+  "hours": 9.0,
+  "is_on_call": 1,
+  "modified": "2026-06-20 01:26:04.806710",
+  "name": "On Call Day",
+  "shift_name": "On Call Day",
+  "start_time": "8:00:00"
+ }
+]
