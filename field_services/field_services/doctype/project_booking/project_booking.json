@@ -1,91 +1,122 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "naming_series:",
  "creation": "2026-06-13 00:00:00.000000",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "naming_series",
-  "booking_title",
-  "customer",
+  "project",
+  "service_team",
+  "status",
+  "priority",
   "column_break_main",
-  "booking_date",
-  "status"
+  "booking_start",
+  "booking_end",
+  "booked_hours",
+  "booked_by",
+  "section_break_override",
+  "override_reason"
  ],
  "fields": [
   {
-   "default": "PB-.YYYY.-",
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "Series",
-   "options": "PB-.YYYY.-"
-  },
-  {
-   "fieldname": "booking_title",
-   "fieldtype": "Data",
+   "fieldname": "project",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Booking Title",
+   "in_standard_filter": 1,
+   "label": "Project",
+   "options": "Project",
    "reqd": 1
   },
   {
-   "fieldname": "customer",
+   "fetch_from": "project.service_team",
+   "fieldname": "service_team",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Customer",
-   "options": "Customer"
+   "in_standard_filter": 1,
+   "label": "Service Team",
+   "options": "Service Team",
+   "reqd": 1
+  },
+  {
+   "default": "Tentative",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Tentative\nConfirmed\nIn Progress\nCompleted\nCancelled"
+  },
+  {
+   "default": "Medium",
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority",
+   "options": "Low\nMedium\nHigh\nCritical"
   },
   {
    "fieldname": "column_break_main",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "booking_date",
-   "fieldtype": "Date",
+   "fieldname": "booking_start",
+   "fieldtype": "Datetime",
    "in_list_view": 1,
-   "label": "Booking Date"
+   "label": "Booking Start",
+   "reqd": 1
   },
   {
-   "default": "Draft",
-   "fieldname": "status",
-   "fieldtype": "Select",
+   "fieldname": "booking_end",
+   "fieldtype": "Datetime",
+   "label": "Booking End",
+   "reqd": 1
+  },
+  {
+   "fieldname": "booked_hours",
+   "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Status",
-   "options": "Draft\nConfirmed\nCompleted\nCancelled"
+   "label": "Booked Hours",
+   "read_only": 1
+  },
+  {
+   "fieldname": "booked_by",
+   "fieldtype": "Link",
+   "label": "Booked By",
+   "options": "Employee"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_override",
+   "fieldtype": "Section Break",
+   "label": "Override"
+  },
+  {
+   "description": "Required to save a booking that overlaps another for the same team",
+   "fieldname": "override_reason",
+   "fieldtype": "Small Text",
+   "label": "Override Reason"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-06-13 00:00:00.000000",
+ "modified": "2026-06-20 00:00:00.000000",
  "modified_by": "Administrator",
  "module": "Field Services",
  "name": "Project Booking",
- "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
+   "create": 1, "delete": 1, "email": 1, "export": 1, "print": 1,
+   "read": 1, "report": 1, "role": "System Manager", "share": 1, "write": 1
   },
   {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Field Services Manager",
-   "share": 1,
-   "write": 1
+   "create": 1, "delete": 1, "email": 1, "export": 1, "print": 1,
+   "read": 1, "report": 1, "role": "Field Services Manager", "share": 1, "write": 1
+  },
+  {
+   "create": 1, "read": 1, "report": 1, "role": "Field Services Dispatcher", "write": 1
+  },
+  {
+   "read": 1, "role": "Field Services Viewer"
   }
  ],
  "sort_field": "creation",

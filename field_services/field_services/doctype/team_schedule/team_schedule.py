@@ -64,19 +64,16 @@ def get_available_hours(team, start_date, end_date):
 
 @frappe.whitelist()
 def get_booked_hours(team, start_date, end_date):
-	"""Sum booked hours from Project Bookings for a team in a date range.
-
-	Project Booking is currently a stub; this returns 0 until it gains a
-	service_team link and a booked_hours field, then starts reporting
-	real data automatically."""
+	"""Sum booked hours from Project Bookings for a team whose booking
+	start date falls within the given range (Cancelled excluded)."""
 	meta = frappe.get_meta("Project Booking")
 	if not (meta.has_field("service_team") and meta.has_field("booked_hours")):
 		return 0.0
 
-	conditions = "service_team = %(team)s AND docstatus < 2"
+	conditions = "service_team = %(team)s AND status != 'Cancelled'"
 	params = {"team": team}
-	if meta.has_field("booking_date"):
-		conditions += " AND booking_date BETWEEN %(start_date)s AND %(end_date)s"
+	if meta.has_field("booking_start"):
+		conditions += " AND DATE(booking_start) BETWEEN %(start_date)s AND %(end_date)s"
 		params["start_date"] = getdate(start_date)
 		params["end_date"] = getdate(end_date)
 
