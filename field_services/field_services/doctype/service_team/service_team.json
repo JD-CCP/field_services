@@ -78,11 +78,11 @@
    "options": "Vehicle"
   },
   {
+   "description": "Leave blank to auto-create one on save, pick an existing warehouse, or create a new one inline.",
    "fieldname": "team_warehouse",
    "fieldtype": "Link",
    "label": "Team Warehouse",
-   "options": "Warehouse",
-   "read_only": 1
+   "options": "Warehouse"
   },
   {
    "fieldname": "source_warehouse",

@@ -69,6 +69,22 @@ function apply_team_lead_to_members(frm) {
 }
 
 frappe.ui.form.on('Service Team', {
+	refresh(frm) {
+		if (!frm.is_new() && !frm.doc.team_warehouse) {
+			frm.add_custom_button(__('Create Team Warehouse'), function () {
+				frm.call('create_team_warehouse').then(function (r) {
+					frm.reload_doc();
+					if (r.message) {
+						frappe.show_alert({
+							message: __('Team warehouse set: {0}', [r.message.team_warehouse]),
+							indicator: 'green',
+						});
+					}
+				});
+			});
+		}
+	},
+
 	team_lead(frm) {
 		// suppress recursive trigger while we clear the value on cancel
 		if (frm._skip_team_lead_check) {
