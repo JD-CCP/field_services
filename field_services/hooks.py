@@ -94,6 +94,7 @@ after_migrate = ["field_services.install.after_migrate"]
 fixtures = [
 	{"dt": "Custom Field", "filters": [["module", "=", "Field Services"]]},
 	{"dt": "Role", "filters": [["name", "like", "Field Services%"]]},
+	{"dt": "Workspace", "filters": [["module", "=", "Field Services"]]},
 ]
 
 # Uninstallation
