@@ -5,6 +5,185 @@ from frappe.utils.password import get_decrypted_password
 
 # Whitelisted methods for Field Services portals
 
+SLOTS = ["Slot 1", "Slot 2", "Slot 3"]
+LOCKED_BOOKING_STATUSES = ("Pre-Scheduled", "Confirmed", "Dispatched")
+
+
+def _booking_card(b):
+	start = b.get("site_start_time")
+	end = b.get("site_end_time")
+	time_range = ""
+	if start and end:
+		time_range = f"{frappe.utils.format_datetime(start, 'HH:mm')}-{frappe.utils.format_datetime(end, 'HH:mm')}"
+	return {
+		"name": b.get("name"),
+		"project": b.get("project"),
+		"project_name": b.get("project_name") or b.get("project"),
+		"customer": b.get("customer"),
+		"site_area": b.get("site_area"),
+		"project_type": b.get("project_type"),
+		"scheduling_priority": b.get("scheduling_priority"),
+		"work_type": b.get("work_type"),
+		"schedule_status": b.get("schedule_status"),
+		"time_range": time_range,
+		"readiness_status": b.get("readiness_status"),
+		"double_booking_status": b.get("double_booking_status"),
+		"alert_message": b.get("alert_message"),
+	}
+
+
+def _scheduled_day_map(teams):
+	"""For each team -> list of (repeat_days set, start_date, end_date) from
+	its active Team Schedules, to tell if a team works a given day."""
+	out = {}
+	for t in teams:
+		scheds = frappe.get_all(
+			"Team Schedule",
+			filters={"service_team": t["name"], "status": "Active"},
+			fields=["name", "start_date", "end_date"],
+		)
+		entries = []
+		for s in scheds:
+			days = set(frappe.get_all("Schedule Day", filters={"parent": s.name, "parenttype": "Team Schedule"}, pluck="day"))
+			entries.append((days, frappe.utils.getdate(s.start_date), frappe.utils.getdate(s.end_date) if s.end_date else None))
+		out[t["name"]] = entries
+	return out
+
+
+def _team_works_day(entries, day):
+	weekday = day.strftime("%A")
+	for days, s_start, s_end in entries:
+		if day < s_start:
+			continue
+		if s_end and day > s_end:
+			continue
+		if weekday in days:
+			return True
+	return False
+
+
+@frappe.whitelist()
+def get_dispatch_data(view, date, region=None):
+	"""Dispatch board data for Today / Week / Month views."""
+	from frappe.utils import add_days, getdate
+
+	view = (view or "Today").title()
+	anchor = getdate(date)
+
+	team_filters = {}
+	if region:
+		team_filters["service_region"] = region
+	teams = frappe.get_all(
+		"Service Team", filters=team_filters,
+		fields=["name", "team_name", "service_region"], order_by="team_name",
+	)
+	team_names = [t["name"] for t in teams]
+
+	bfields = ["name", "project", "customer", "site_area", "project_type",
+			   "scheduling_priority", "service_team", "schedule_date", "slot",
+			   "work_type", "schedule_status", "site_start_time", "site_end_time",
+			   "readiness_status", "double_booking_status", "alert_message"]
+
+	def load_bookings(start, end):
+		if not team_names:
+			return []
+		rows = frappe.get_all(
+			"Field Service Booking",
+			filters={"service_team": ["in", team_names], "schedule_date": ["between", [start, end]],
+					 "schedule_status": ["!=", "Cancelled"]},
+			fields=bfields,
+		)
+		pc = {}
+		for r in rows:
+			if r.project and r.project not in pc:
+				pc[r.project] = frappe.db.get_value("Project", r.project, "project_name")
+			r["project_name"] = pc.get(r.project)
+		return rows
+
+	if view == "Today":
+		return _today_view(teams, anchor, load_bookings(anchor, anchor))
+	if view == "Week":
+		start = add_days(anchor, -anchor.weekday())  # Monday
+		days = [add_days(start, i) for i in range(7)]
+		return _week_view(teams, days, load_bookings(days[0], days[-1]))
+	# Month
+	start = anchor.replace(day=1)
+	next_month = (start.replace(day=28) + __import__("datetime").timedelta(days=4)).replace(day=1)
+	end = next_month - __import__("datetime").timedelta(days=1)
+	days = [add_days(start, i) for i in range((end - start).days + 1)]
+	return _month_view(teams, days, load_bookings(start, end))
+
+
+def _today_view(teams, day, bookings):
+	by_team = {}
+	for b in bookings:
+		by_team.setdefault(b["service_team"], []).append(b)
+	rows = []
+	for t in teams:
+		tb = by_team.get(t["name"], [])
+		slots = {s: None for s in SLOTS}
+		unslotted = []
+		alerts = set()
+		for b in tb:
+			card = _booking_card(b)
+			if b.get("slot") in slots and slots[b["slot"]] is None:
+				slots[b["slot"]] = card
+			else:
+				unslotted.append(card)
+			if b.get("readiness_status") == "Not Ready" and b.get("alert_message"):
+				alerts.add(b["alert_message"])
+			if b.get("double_booking_status") in ("Warning", "Clash"):
+				alerts.add("Possible double booking")
+		rows.append({
+			"name": t["name"], "team_name": t["team_name"], "region": t["service_region"],
+			"slots": slots, "unslotted": unslotted, "alerts": sorted(alerts),
+		})
+	return {"view": "Today", "date": str(day), "teams": rows}
+
+
+def _week_view(teams, days, bookings):
+	by = {}
+	for b in bookings:
+		by.setdefault((b["service_team"], str(b["schedule_date"])), []).append(b)
+	rows = []
+	for t in teams:
+		cells = []
+		for d in days:
+			tb = by.get((t["name"], str(d)), [])
+			booked = len(tb)
+			tentative = sum(1 for b in tb if b["schedule_status"] == "Tentative")
+			cells.append({
+				"date": str(d), "booked": booked, "free": max(0, 3 - booked),
+				"tentative": tentative,
+				"statuses": [b["schedule_status"] for b in tb],
+			})
+		rows.append({"name": t["name"], "team_name": t["team_name"], "days": cells})
+	return {"view": "Week", "days": [str(d) for d in days], "teams": rows}
+
+
+def _month_view(teams, days, bookings):
+	sched = _scheduled_day_map(teams)
+	by_day = {}
+	for b in bookings:
+		by_day.setdefault(str(b["schedule_date"]), []).append(b)
+	total_slots_per_day = len(teams) * 3
+	cells = []
+	for d in days:
+		db = by_day.get(str(d), [])
+		booked = len(db)
+		unavailable = sum(0 if _team_works_day(sched.get(t["name"], []), d) else 1 for t in teams)
+		cells.append({
+			"date": str(d), "day_num": d.day,
+			"total_slots": total_slots_per_day, "booked": booked,
+			"available": max(0, total_slots_per_day - booked),
+			"p1p2": sum(1 for b in db if (b.get("scheduling_priority") or 5) <= 2),
+			"tentative": sum(1 for b in db if b["schedule_status"] == "Tentative"),
+			"confirmed": sum(1 for b in db if b["schedule_status"] == "Confirmed"),
+			"blocked": sum(1 for b in db if b.get("double_booking_status") in ("Warning", "Clash") or b.get("readiness_status") == "Not Ready"),
+			"teams_unavailable": unavailable,
+		})
+	return {"view": "Month", "days": cells}
+
 
 @frappe.whitelist()
 def get_calendar_data(start_date, end_date, region=None):

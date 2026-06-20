@@ -1,0 +1,23 @@
+{
+ "content": null,
+ "creation": "2026-06-20 00:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Page",
+ "icon": "list",
+ "idx": 0,
+ "modified": "2026-06-20 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Field Services",
+ "name": "field-services-dispatch",
+ "owner": "Administrator",
+ "page_name": "field-services-dispatch",
+ "roles": [
+  {"role": "System Manager"},
+  {"role": "Field Services Manager"},
+  {"role": "Field Services Dispatcher"},
+  {"role": "Field Services Viewer"}
+ ],
+ "standard": "Yes",
+ "system_page": 0,
+ "title": "Field Services Dispatch"
+}
