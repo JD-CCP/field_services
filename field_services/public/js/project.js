@@ -19,6 +19,15 @@ frappe.ui.form.on("Project", {
 		frm.add_custom_button(__("Create Material Request"), function () {
 			open_material_request_dialog(frm);
 		});
+
+		frm.add_custom_button(__("Schedule Field Service"), function () {
+			frappe.new_doc("Field Service Booking", {
+				project: frm.doc.name,
+				customer: frm.doc.customer,
+				project_type: frm.doc.project_type,
+				service_team: frm.doc.service_team,
+			});
+		});
 	},
 });
 

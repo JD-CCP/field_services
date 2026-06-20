@@ -4,6 +4,25 @@ from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 
 def after_migrate():
 	ensure_custom_fields()
+	ensure_project_types()
+
+
+DEFAULT_PROJECT_TYPES = [
+	"P1 - Critical / Major Incident",
+	"P2 - High Priority",
+	"P3 - Medium / Maintenance / Standard Incident",
+	"P4 - Low / Minor / Scheduled",
+	"Project / Planning / Service Request",
+]
+
+
+def ensure_project_types():
+	"""Create the scheduler's priority Project Types if missing (idempotent)."""
+	if not frappe.db.exists("DocType", "Project Type"):
+		return
+	for pt in DEFAULT_PROJECT_TYPES:
+		if not frappe.db.exists("Project Type", pt):
+			frappe.get_doc({"doctype": "Project Type", "project_type": pt}).insert(ignore_permissions=True)
 
 
 CUSTOM_FIELDS = {
@@ -81,6 +100,12 @@ CUSTOM_FIELDS = {
 			"fieldtype": "Currency",
 			"read_only": 1,
 			"insert_after": "total_planned_material_cost",
+		},
+		{
+			"fieldname": "field_visit_required",
+			"label": "Field Visit Required",
+			"fieldtype": "Check",
+			"insert_after": "service_team",
 		},
 	],
 	"Quotation": [
