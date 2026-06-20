@@ -7,6 +7,67 @@ from frappe.utils.password import get_decrypted_password
 
 
 @frappe.whitelist()
+def get_calendar_data(start_date, end_date, region=None):
+	"""Feed the Field Services calendar: teams (with availability for the
+	period) and their Project Bookings overlapping the visible range."""
+	from field_services.field_services.doctype.team_schedule.team_schedule import (
+		get_available_hours,
+		get_booked_hours,
+	)
+
+	team_filters = {}
+	if region:
+		team_filters["service_region"] = region
+	teams = frappe.get_all(
+		"Service Team",
+		filters=team_filters,
+		fields=["name", "team_name", "service_region"],
+		order_by="team_name",
+	)
+
+	team_rows = []
+	for t in teams:
+		total = get_available_hours(t.name, start_date, end_date)["total_hours"]
+		booked = get_booked_hours(t.name, start_date, end_date)
+		team_rows.append({
+			"name": t.name,
+			"team_name": t.team_name,
+			"region": t.service_region,
+			"total_hours": total,
+			"booked_hours": booked,
+			"available_hours": total - booked,
+		})
+
+	bookings = []
+	if teams:
+		rows = frappe.get_all(
+			"Project Booking",
+			filters={
+				"service_team": ["in", [t.name for t in teams]],
+				"status": ["!=", "Cancelled"],
+				"booking_start": ["<=", f"{end_date} 23:59:59"],
+				"booking_end": [">=", f"{start_date} 00:00:00"],
+			},
+			fields=[
+				"name", "project", "service_team", "booking_start", "booking_end",
+				"booked_hours", "status",
+			],
+		)
+		proj_cache = {}
+		for b in rows:
+			if b.project not in proj_cache:
+				proj_cache[b.project] = frappe.db.get_value(
+					"Project", b.project, ["project_name", "customer"], as_dict=True
+				) or frappe._dict()
+			p = proj_cache[b.project]
+			b["project_name"] = p.get("project_name") or b.project
+			b["customer"] = p.get("customer")
+			bookings.append(b)
+
+	return {"teams": team_rows, "bookings": bookings}
+
+
+@frappe.whitelist()
 def confirm_stock_receipt(stock_entry, pin):
 	"""Team lead confirms receipt of stock transfer."""
 	se = frappe.get_doc("Stock Entry", stock_entry)

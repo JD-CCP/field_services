@@ -1,7 +1,7 @@
 [
  {
   "charts": [],
-  "content": "[{\"id\": \"f44e96a3c6\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Operations</b></span>\", \"col\": 12}}, {\"id\": \"c24649379f\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Field Job Card\", \"col\": 3}}, {\"id\": \"30c2f97858\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Material Verification\", \"col\": 3}}, {\"id\": \"0dc51141a1\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Planning</b></span>\", \"col\": 12}}, {\"id\": \"be1e4a2857\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"FS Shift Type\", \"col\": 3}}, {\"id\": \"eba3dbdc87\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Team Schedule\", \"col\": 3}}, {\"id\": \"ddbd900fd7\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Project Booking\", \"col\": 3}}, {\"id\": \"d38c12bfdb\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Masters</b></span>\", \"col\": 12}}, {\"id\": \"94d7e9597d\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Service Region\", \"col\": 3}}, {\"id\": \"9c9ef95d37\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Site\", \"col\": 3}}, {\"id\": \"f842e88af0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Service Team\", \"col\": 3}}, {\"id\": \"b6efe3b700\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Service BOM\", \"col\": 3}}, {\"id\": \"f3c8a536a3\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Quality</b></span>\", \"col\": 12}}, {\"id\": \"c834a3cf4c\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"QC Template\", \"col\": 3}}, {\"id\": \"e269967913\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Field QC Checklist\", \"col\": 3}}, {\"id\": \"540837e748\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Reports</b></span>\", \"col\": 12}}, {\"id\": \"4b93d53136\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Material Variance by Project\", \"col\": 4}}, {\"id\": \"dbbe0f038e\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Team Store Stock Balance\", \"col\": 4}}, {\"id\": \"e8b7a8f5fd\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Unconfirmed Transfers\", \"col\": 4}}, {\"id\": \"4082d7ab44\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Material Verification Summary\", \"col\": 4}}]",
+  "content": "[{\"id\": \"f44e96a3c6\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Operations</b></span>\", \"col\": 12}}, {\"id\": \"db3b2baee6\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Field Services Calendar\", \"col\": 4}}, {\"id\": \"c24649379f\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Field Job Card\", \"col\": 3}}, {\"id\": \"30c2f97858\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Material Verification\", \"col\": 3}}, {\"id\": \"0dc51141a1\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Planning</b></span>\", \"col\": 12}}, {\"id\": \"be1e4a2857\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"FS Shift Type\", \"col\": 3}}, {\"id\": \"eba3dbdc87\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Team Schedule\", \"col\": 3}}, {\"id\": \"ddbd900fd7\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Project Booking\", \"col\": 3}}, {\"id\": \"d38c12bfdb\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Masters</b></span>\", \"col\": 12}}, {\"id\": \"94d7e9597d\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Service Region\", \"col\": 3}}, {\"id\": \"9c9ef95d37\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Site\", \"col\": 3}}, {\"id\": \"f842e88af0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Service Team\", \"col\": 3}}, {\"id\": \"b6efe3b700\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Service BOM\", \"col\": 3}}, {\"id\": \"f3c8a536a3\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Quality</b></span>\", \"col\": 12}}, {\"id\": \"c834a3cf4c\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"QC Template\", \"col\": 3}}, {\"id\": \"e269967913\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Field QC Checklist\", \"col\": 3}}, {\"id\": \"540837e748\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Reports</b></span>\", \"col\": 12}}, {\"id\": \"4b93d53136\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Material Variance by Project\", \"col\": 4}}, {\"id\": \"dbbe0f038e\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Team Store Stock Balance\", \"col\": 4}}, {\"id\": \"e8b7a8f5fd\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Unconfirmed Transfers\", \"col\": 4}}, {\"id\": \"4082d7ab44\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Material Verification Summary\", \"col\": 4}}]",
   "custom_blocks": [],
   "docstatus": 0,
   "doctype": "Workspace",
@@ -12,7 +12,7 @@
   "is_hidden": 0,
   "label": "Field Services",
   "links": [],
-  "modified": "2026-06-20 00:55:25.595563",
+  "modified": "2026-06-20 08:42:48.129007",
   "module": "Field Services",
   "name": "Field Services",
   "number_cards": [],
@@ -276,6 +276,23 @@
     "restrict_to_domain": null,
     "stats_filter": null,
     "type": "Report",
+    "url": null
+   },
+   {
+    "color": "Blue",
+    "doc_view": "",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Field Services Calendar",
+    "link_to": "field-services-calendar",
+    "parent": "Field Services",
+    "parentfield": "shortcuts",
+    "parenttype": "Workspace",
+    "report_ref_doctype": null,
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "Page",
     "url": null
    }
   ],
